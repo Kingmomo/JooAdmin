@@ -1,0 +1,58 @@
+package com.darmajaya.jooadmin.utils;
+
+import android.content.Context;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+
+import com.google.android.material.textfield.TextInputEditText;
+
+
+public class Validate {
+
+    public static boolean cek(EditText et) {
+            View focusView = null;
+            Boolean cancel=false;
+            if (TextUtils.isEmpty(et.getText().toString().trim())) {
+                et.setError("Inputan Harus Di Isi");
+                focusView = et;
+                cancel = true;
+            }
+            if (cancel) {
+                focusView.requestFocus();
+            }
+            return cancel;
+    }
+
+
+    public static boolean cekPassword(TextInputEditText et, TextInputEditText et2){
+        View focusView = null;
+        Boolean cancel = false;
+        if (TextUtils.isEmpty(et.getText().toString().trim())) {
+            et.setError("Password tidak boleh kosong / < 4 digit");
+            focusView = et;
+            cancel = true;
+        }else if(TextUtils.isEmpty(et2.getText().toString().trim())){
+            et2.setError("Password tidak boleh kosong / < 4 digit");
+            focusView = et2;
+            cancel = true;
+        } else if (et.getText().toString().trim() != et2.getText().toString().trim()) {
+            et.setError("Password Tidak sama");
+            focusView = et2;
+            cancel = true;
+        }else{
+            cancel = false;
+        }
+
+        if (cancel) {
+            focusView.requestFocus();
+        }
+        return cancel;
+    }
+
+    public static void dismissKeyboard(EditText editText, Context context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+}

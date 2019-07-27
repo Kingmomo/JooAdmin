@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_5">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        android:scrollingCache="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_large">
+
+            <ImageView
+                android:id="@+id/foto"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:scaleType="centerCrop" />
+
+
+            <EditText
+                android:id="@+id/nama_produk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="@color/loginSignup2InputBg"
+                android:gravity="left"
+                android:hint="Nama Produk"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textColor="@android:color/black"
+                android:textCursorDrawable="@drawable/loginsignup_color_cursor"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/harga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="@color/loginSignup2InputBg"
+                android:gravity="left"
+                android:hint="Harga"
+                android:inputType="number"
+                android:padding="12dp"
+                android:textColor="@android:color/black"
+                android:textCursorDrawable="@drawable/loginsignup_color_cursor"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/deskripsi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="@color/loginSignup2InputBg"
+                android:gravity="left"
+                android:hint="Deskripsi"
+                android:inputType="textMultiLine"
+                android:padding="12dp"
+                android:textColor="@android:color/black"
+                android:textCursorDrawable="@drawable/loginsignup_color_cursor"
+                android:textSize="14sp" />
+
+
+            <Button
+                android:id="@+id/tambahproduk"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="@color/colorPrimary"
+                android:text="Tambah Produk"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
