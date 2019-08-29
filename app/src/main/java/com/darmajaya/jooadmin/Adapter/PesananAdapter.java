@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.darmajaya.jooadmin.MapsPesananActivity;
 import com.darmajaya.jooadmin.Model.Transaksi;
 import com.darmajaya.jooadmin.PesananDetailActivity;
 import com.darmajaya.jooadmin.R;
@@ -80,6 +81,14 @@ public class PesananAdapter extends FirestoreRecyclerAdapter<Transaksi, PesananA
             }
         });
 
+        holder.peta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MapsPesananActivity.class);
+                intent.putExtra("koordinat", model.getKoordinat());
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -129,13 +138,13 @@ public class PesananAdapter extends FirestoreRecyclerAdapter<Transaksi, PesananA
         return new PesananAdapter.MyViewHolder(view);
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextView nama, idtransaksi, total, tanggal, status, jarak;
         View view;
         ImageView detail;
-        Button konfirmasi;
+        Button konfirmasi, peta;
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
             detail = view.findViewById(R.id.detail);
@@ -146,6 +155,7 @@ public class PesananAdapter extends FirestoreRecyclerAdapter<Transaksi, PesananA
             status = view.findViewById(R.id.status);
             konfirmasi = view.findViewById(R.id.konfirmasi);
             jarak = view.findViewById(R.id.jarak);
+            peta = view.findViewById(R.id.peta);
         }
     }
 }
