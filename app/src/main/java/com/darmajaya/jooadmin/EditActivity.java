@@ -24,6 +24,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.darmajaya.jooadmin.Model.AddProduct;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,20 +36,22 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Map;
 
 public class EditActivity extends AppCompatActivity {
 
     private static final String TAG = "Uploadctivity";
     private ImageView foto;
     private Button tambahproduk;
-    private EditText nama_produk, harga, deskripsi;
+    private EditText nama_produk, harga, deskripsi, waktu;
     private static final String FB_STORAGE_PATH = "produktoko/";
-    private static final int GALLERY_REQUEST_CODE = 5;
+    private static final int GALLERY_REQUEST_CODE = 6;
     private int MAP = 3;
     private StorageReference storage;
     private Uri imgUri;
     private UploadTask uploadTask;
     private FirebaseFirestore db;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,7 @@ public class EditActivity extends AppCompatActivity {
         nama_produk = findViewById(R.id.nama_produk);
         harga = findViewById(R.id.harga);
         deskripsi = findViewById(R.id.deskripsi);
+        waktu = findViewById(R.id.waktu);
         db = FirebaseFirestore.getInstance();
 
         storage = FirebaseStorage.getInstance().getReference();
@@ -82,10 +86,11 @@ public class EditActivity extends AppCompatActivity {
                                     .fitCenter())
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(foto);
-
+            uid = getIntent().getStringExtra("uid");
             nama_produk.setText(getIntent().getStringExtra("nama"));
             harga.setText(getIntent().getStringExtra("harga"));
             deskripsi.setText(getIntent().getStringExtra("deskripsi"));
+            waktu.setText(getIntent().getStringExtra("waktu"));
         }
 
 
@@ -143,15 +148,23 @@ public class EditActivity extends AppCompatActivity {
                                 Uri downloadUri = task.getResult();
                                 dialog.dismiss();
 
-                                AddProduct produk = new AddProduct();
-                                produk.setFoto(downloadUri.toString());
-                                produk.setNama_produk(nama_produk.getText().toString());
-                                produk.setHarga(harga.getText().toString());
-                                produk.setDeskripsi(deskripsi.getText().toString());
-
+                                final ProgressDialog dialog = new ProgressDialog(EditActivity.this);
+                                dialog.setTitle("Uploading image");
+                                dialog.setMessage("Sedang Proses");
+                                dialog.show();
 
                                 DocumentReference updatekonfimasi = db.collection("produk").document(getIntent().getStringExtra("uid"));
-                                updatekonfimasi.set(produk);
+                                updatekonfimasi.update("nama_produk", nama_produk.getText().toString());
+                                updatekonfimasi.update("deskripsi", deskripsi.getText().toString());
+                                updatekonfimasi.update("foto", downloadUri.toString());
+                                updatekonfimasi.update("harga", harga.getText().toString());
+                                updatekonfimasi.update("waktu", waktu.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        dialog.dismiss();
+
+                                    }
+                                });
 
 
                                 Toast.makeText(EditActivity.this, "Upload Produk Sukses", Toast.LENGTH_SHORT).show();
@@ -177,7 +190,23 @@ public class EditActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toast.makeText(EditActivity.this, "Pilih Gambar Terlebih Dahulu", Toast.LENGTH_SHORT).show();
+                    final ProgressDialog dialog = new ProgressDialog(EditActivity.this);
+                    dialog.setTitle("Loading");
+                    dialog.setMessage("Sedang Proses");
+                    dialog.show();
+
+                    DocumentReference updatekonfimasi = db.collection("produk").document(getIntent().getStringExtra("uid"));
+                    updatekonfimasi.update("nama_produk", nama_produk.getText().toString());
+                    updatekonfimasi.update("deskripsi", deskripsi.getText().toString());
+                    updatekonfimasi.update("harga", harga.getText().toString());
+                    updatekonfimasi.update("waktu", waktu.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            dialog.dismiss();
+                            finish();
+
+                        }
+                    });
                 }
 
             }

@@ -2,11 +2,13 @@ package com.darmajaya.jooadmin.Model;
 
 public class Transaksi {
     private String iduser, nama, alamat, notelp, tanggal, koordinat, total, listproduk, status, jarak, bukti_transfer;
+    private int waktu;
+
 
     public Transaksi() {
     }
 
-    public Transaksi(String iduser, String nama, String alamat, String notelp, String tanggal, String koordinat, String total, String listproduk, String status, String jarak, String bukti_transfer) {
+    public Transaksi(String iduser, String nama, String alamat, String notelp, String tanggal, String koordinat, String total, String listproduk, String status, String jarak, String bukti_transfer, int waktu) {
         this.iduser = iduser;
         this.nama = nama;
         this.alamat = alamat;
@@ -18,6 +20,7 @@ public class Transaksi {
         this.status = status;
         this.jarak = jarak;
         this.bukti_transfer = bukti_transfer;
+        this.waktu = waktu;
     }
 
     public String getIduser() {
@@ -106,5 +109,13 @@ public class Transaksi {
 
     public void setBukti_transfer(String bukti_transfer) {
         this.bukti_transfer = bukti_transfer;
+    }
+
+    public int getWaktu() {
+        return waktu;
+    }
+
+    public void setWaktu(int waktu) {
+        this.waktu = waktu;
     }
 }

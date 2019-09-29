@@ -39,7 +39,7 @@ public class AddProductActivity extends AppCompatActivity {
     private static final String TAG = "Uploadctivity";
     private ImageView foto;
     private Button tambahproduk;
-    private EditText nama_produk, harga, deskripsi;
+    private EditText nama_produk, harga, deskripsi, waktu;
     private static final String FB_STORAGE_PATH = "produktoko/";
     private static final int GALLERY_REQUEST_CODE = 5;
     private int MAP = 3;
@@ -58,6 +58,7 @@ public class AddProductActivity extends AppCompatActivity {
         nama_produk = findViewById(R.id.nama_produk);
         harga = findViewById(R.id.harga);
         deskripsi = findViewById(R.id.deskripsi);
+        waktu = findViewById(R.id.waktu);
         db = FirebaseFirestore.getInstance();
 
         storage = FirebaseStorage.getInstance().getReference();
@@ -131,6 +132,7 @@ public class AddProductActivity extends AppCompatActivity {
                                 produk.setNama_produk(nama_produk.getText().toString());
                                 produk.setHarga(harga.getText().toString());
                                 produk.setDeskripsi(deskripsi.getText().toString());
+                                produk.setWaktu(waktu.getText().toString());
 
 
                                 DocumentReference updatekonfimasi = db.collection("produk").document();
@@ -142,7 +144,18 @@ public class AddProductActivity extends AppCompatActivity {
                                 startActivity(new Intent(AddProductActivity.this, MainActivity.class));
                             } else {
                                 dialog.dismiss();
-                                Toasty.warning(AddProductActivity.this, "Upload Produk Gagal", Toast.LENGTH_SHORT).show();
+                                AddProduct produk = new AddProduct();
+                                produk.setNama_produk(nama_produk.getText().toString());
+                                produk.setHarga(harga.getText().toString());
+                                produk.setDeskripsi(deskripsi.getText().toString());
+                                produk.setWaktu(waktu.getText().toString());
+
+
+                                DocumentReference updatekonfimasi = db.collection("produk").document();
+                                updatekonfimasi.set(produk);
+
+
+                                Toasty.success(AddProductActivity.this, "Upload Produk Sukses", Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -161,7 +174,9 @@ public class AddProductActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toasty.warning(AddProductActivity.this, "Pilih Gambar Terlebih Dahulu", Toast.LENGTH_SHORT).show();
+                    final ProgressDialog dialog = new ProgressDialog(AddProductActivity.this);
+                    dialog.setTitle("Uploading image");
+                    dialog.show();
 
                 }
 

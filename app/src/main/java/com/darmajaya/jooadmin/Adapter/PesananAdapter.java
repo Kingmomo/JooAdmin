@@ -60,7 +60,7 @@ public class PesananAdapter extends FirestoreRecyclerAdapter<Transaksi, PesananA
         holder.total.setText(model.getTotal());
         holder.tanggal.setText(model.getTanggal());
         holder.status.setText(model.getStatus());
-        holder.jarak.setText(model.getJarak() + " KM");
+        holder.jarak.setText(waktu(model.getWaktu()));
         holder.idtransaksi.setText(getSnapshots().getSnapshot(i).getId());
         holder.detail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +138,7 @@ public class PesananAdapter extends FirestoreRecyclerAdapter<Transaksi, PesananA
         return new PesananAdapter.MyViewHolder(view);
     }
 
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView nama, idtransaksi, total, tanggal, status, jarak;
         View view;
@@ -154,8 +155,12 @@ public class PesananAdapter extends FirestoreRecyclerAdapter<Transaksi, PesananA
             tanggal = view.findViewById(R.id.tanggal);
             status = view.findViewById(R.id.status);
             konfirmasi = view.findViewById(R.id.konfirmasi);
-            jarak = view.findViewById(R.id.jarak);
+            jarak = view.findViewById(R.id.waktu);
             peta = view.findViewById(R.id.peta);
         }
+    }
+
+    public String waktu(int time){
+        return time/24/60 + " Hari - " + time/60%24 + " Jam - " + time%60 + " Menit";
     }
 }

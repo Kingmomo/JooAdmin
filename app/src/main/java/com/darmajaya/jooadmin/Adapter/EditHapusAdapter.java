@@ -60,6 +60,8 @@ public class EditHapusAdapter extends FirestoreRecyclerAdapter<Produk, EditHapus
         holder.nama.setText(model.getNama_produk());
         holder.harga.setText(model.getHarga());
         holder.deskripsi.setText(model.getDeskripsi());
+        holder.waktu.setText(waktu(Integer.parseInt(model.getWaktu())));
+//        System.out.println("waktu saya" +waktu(233));
 
         Glide.with(context)
                 .load(model.getFoto())
@@ -86,6 +88,7 @@ public class EditHapusAdapter extends FirestoreRecyclerAdapter<Produk, EditHapus
                 intent.putExtra("foto", model.getFoto());
                 intent.putExtra("nama", model.getNama_produk());
                 intent.putExtra("harga", model.getHarga());
+                intent.putExtra("waktu", model.getWaktu());
                 intent.putExtra("deskripsi", model.getDeskripsi());
                 context.startActivity(intent);
             }
@@ -103,7 +106,7 @@ public class EditHapusAdapter extends FirestoreRecyclerAdapter<Produk, EditHapus
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView nama, harga, deskripsi;
+        TextView nama, harga, deskripsi, waktu;
         View view;
         ImageView foto;
         Button edit, hapus;
@@ -114,6 +117,7 @@ public class EditHapusAdapter extends FirestoreRecyclerAdapter<Produk, EditHapus
             foto = view.findViewById(R.id.foto);
             nama = view.findViewById(R.id.nama);
             harga = view.findViewById(R.id.harga);
+            waktu = view.findViewById(R.id.waktu);
             deskripsi = view.findViewById(R.id.deskripsi);
             edit = view.findViewById(R.id.edit);
             hapus = view.findViewById(R.id.hapus);
@@ -152,5 +156,9 @@ public class EditHapusAdapter extends FirestoreRecyclerAdapter<Produk, EditHapus
         // Create the AlertDialog object and return it
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public String waktu(int time){
+        return time/24/60 + " Hari - " + time/60%24 + " Jam - " + time%60 + " Menit";
     }
 }

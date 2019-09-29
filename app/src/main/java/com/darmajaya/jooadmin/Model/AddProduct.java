@@ -1,16 +1,17 @@
 package com.darmajaya.jooadmin.Model;
 
 public class AddProduct{
-    String nama_produk, foto, harga, deskripsi;
+    String nama_produk, foto, harga, deskripsi, waktu;
 
-    public AddProduct(String nama_produk, String foto, String harga, String deskripsi) {
+    public AddProduct() {
+    }
+
+    public AddProduct(String nama_produk, String foto, String harga, String deskripsi, String waktu) {
         this.nama_produk = nama_produk;
         this.foto = foto;
         this.harga = harga;
         this.deskripsi = deskripsi;
-    }
-
-    public AddProduct() {
+        this.waktu = waktu;
     }
 
     public String getNama_produk() {
@@ -43,5 +44,13 @@ public class AddProduct{
 
     public void setDeskripsi(String deskripsi) {
         this.deskripsi = deskripsi;
+    }
+
+    public String getWaktu() {
+        return waktu;
+    }
+
+    public void setWaktu(String waktu) {
+        this.waktu = waktu;
     }
 }
